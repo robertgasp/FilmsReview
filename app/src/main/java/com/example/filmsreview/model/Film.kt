@@ -4,7 +4,6 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-
 data class Film(
     private val cover: Int,
     private val title: String,
@@ -27,5 +26,4 @@ data class Film(
     fun getGenre(): String {
         return genre
     }
-
 }

@@ -1,17 +1,14 @@
 package com.example.filmsreview.model
 
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.util.Log
+import androidx.lifecycle.*
 import com.example.filmsreview.AppState
-import com.example.filmsreview.repository.FilmsRepository
 import java.lang.Thread.sleep
 
-class FilmsViewModel(private val myLiveData: MutableLiveData<AppState> = MutableLiveData()) :
-    ViewModel() {
+class FilmsViewModel(private val repositoryInterface: FilmsRepositoryInterface) : ViewModel(),
+    LifecycleObserver {
+    private val myLiveData: MutableLiveData<AppState> = MutableLiveData()
 
-
-    private var repositoryInterface: FilmsRepositoryInterface = FilmsRepository()
 
     fun getMyLiveData() = myLiveData
 
@@ -23,4 +20,8 @@ class FilmsViewModel(private val myLiveData: MutableLiveData<AppState> = Mutable
         }.start()
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    private fun onViewStart() {
+        Log.i("LifecycleEvent", "onStart")
+    }
 }

@@ -6,4 +6,7 @@
     <string name="grid_view">Плитка</string>
     <string name="list_mode">Список</string>
     <string name="view_mode">Вид</string>
+    <string name="Loading_success">Загрузка прошла успешно</string>
+    <string name="Error">Error</string>
+    <string name="Error_rus">Ошибка</string>
 </resources>

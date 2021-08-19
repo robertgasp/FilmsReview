@@ -14,7 +14,6 @@ class DescriptionPage : Fragment() {
     private var _binding: FragmentDescriptionPageBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,11 +22,10 @@ class DescriptionPage : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val film = arguments?.getParcelable<FilmsList>(BUNDLE_EXTRA)
-        if (film != null) {
+        film?.let {
             with(binding) {
                 cover.setImageResource(film.film.getCover())
                 title.text = film.film.getTitle()
@@ -37,11 +35,12 @@ class DescriptionPage : Fragment() {
         }
     }
 
-
     companion object {
         const val BUNDLE_EXTRA = "film"
 
+
         fun newInstance(bundle: Bundle): DescriptionPage {
+
             val fragment = DescriptionPage()
             fragment.arguments = bundle
             return fragment

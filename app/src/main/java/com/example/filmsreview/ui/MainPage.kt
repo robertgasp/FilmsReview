@@ -6,29 +6,49 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import android.widget.Toast
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.filmsreview.AppState
 import com.example.filmsreview.FilmClickListener
 import com.example.filmsreview.R
 import com.example.filmsreview.databinding.FragmentMainPageBinding
-import com.example.filmsreview.model.Film
 import com.example.filmsreview.model.FilmsViewModel
 import com.example.filmsreview.repository.FilmsList
+import com.example.filmsreview.repository.getFilmsList
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import org.koin.android.ext.android.bind
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainPage : Fragment() {
 
-    private lateinit var viewModel: FilmsViewModel
+    private val viewModel: FilmsViewModel by viewModel()
 
     private var bottomNavigation: BottomNavigationView? = null
+    private var filmClickListenerFromMainPage: FilmClickListener? = null
 
     private var _binding: FragmentMainPageBinding? = null
     private val binding get() = _binding!!
-
+    private var recyclerView: RecyclerView? = null
     private var adapter: FilmsAdapter? = null
+    private var films: List<FilmsList>? = null
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is FilmClickListener) {
+            filmClickListenerFromMainPage = context
+        }
+    }
+
+
+    override fun onDetach() {
+        filmClickListenerFromMainPage = null
+        super.onDetach()
+    }
 
 
     override fun onCreateView(
@@ -36,6 +56,7 @@ class MainPage : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainPageBinding.inflate(inflater, container, false)
+        recyclerView = binding.filmsList
         return binding.root
     }
 
@@ -47,37 +68,31 @@ class MainPage : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(binding) {
-            viewModel =
-                ViewModelProvider(requireActivity()).get(FilmsViewModel::class.java)
-            viewModel.getMyLiveData().observe(viewLifecycleOwner, { renderData(it) })
-            viewModel.getFilms()
-        }
+        initRecyclerView(recyclerView, getFilmsList())
+
+        viewModel.getMyLiveData().observe(requireActivity(), {
+            renderData(it)
+            adapter?.setFilm(getFilmsList())
+        })
+        viewModel.getFilms()
     }
+
+
+    private fun initRecyclerView(recyclerView: RecyclerView?, films: List<FilmsList>) {
+        val lm = LinearLayoutManager(context)//GridLayoutManager(context, 3)
+        recyclerView?.layoutManager = lm
+        adapter = FilmsAdapter(this, getFilmsList())
+        recyclerView?.adapter = adapter
+        filmClickListenerFromMainPage?.let { adapter?.setOnFilmClickListener(it) }
+    }
+
 
     private fun renderData(appState: AppState?) = with(binding) {
         when (appState) {
             is AppState.Success -> {
                 loadingLayout.visibility = View.GONE
-                Snackbar.make(binding.bottomMenu, "Загрузка прошла успешно", Snackbar.LENGTH_LONG)
+                Snackbar.make(binding.bottomMenu, getString(R.string.Loading_success), Snackbar.LENGTH_LONG)
                     .show()
-                adapter = FilmsAdapter(object : FilmClickListener {
-                    override fun filmClicked(film: FilmsList) {
-                        val manager = activity?.supportFragmentManager
-                        manager.let { manager ->
-                            val bundle = Bundle().apply {
-                                putParcelable(DescriptionPage.BUNDLE_EXTRA, film)
-                            }
-                            manager?.beginTransaction()
-                                ?.replace(R.id.container, DescriptionPage.newInstance(bundle))
-                                ?.addToBackStack("")
-                                ?.commitAllowingStateLoss()
-                        }
-                    }
-                }).apply {
-                    setFilm(appState.filmsData)
-                }
-                filmsList.adapter = adapter
             }
             is AppState.Loading -> {
                 loadingLayout.visibility = View.VISIBLE
@@ -87,10 +102,10 @@ class MainPage : Fragment() {
                 Snackbar
                     .make(
                         binding.bottomMenu,
-                        "Error",
+                        getString(R.string.Error),
                         Snackbar.LENGTH_INDEFINITE
-                    ) //насколько понимаю, тут не важно, к какому элементу View обращаемся
-                    .setAction("Ошибка") { viewModel.getFilms() }
+                    )
+                    .setAction(getString(R.string.Error_rus)) { viewModel.getFilms() }
                     .show()
             }
             null -> TODO()
@@ -98,6 +113,6 @@ class MainPage : Fragment() {
     }
 
     companion object {
-        fun newInstance(): MainPage = MainPage()
+        fun newInstance() = MainPage()
     }
 }
