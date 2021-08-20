@@ -6,8 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -79,7 +77,7 @@ class MainPage : Fragment() {
 
 
     private fun initRecyclerView(recyclerView: RecyclerView?, films: List<FilmsList>) {
-        val lm = LinearLayoutManager(context)//GridLayoutManager(context, 3)
+        val lm = GridLayoutManager(context, 3)
         recyclerView?.layoutManager = lm
         adapter = FilmsAdapter(this, getFilmsList())
         recyclerView?.adapter = adapter

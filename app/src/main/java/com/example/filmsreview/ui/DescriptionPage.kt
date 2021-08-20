@@ -37,10 +37,7 @@ class DescriptionPage : Fragment() {
 
     companion object {
         const val BUNDLE_EXTRA = "film"
-
-
         fun newInstance(bundle: Bundle): DescriptionPage {
-
             val fragment = DescriptionPage()
             fragment.arguments = bundle
             return fragment
