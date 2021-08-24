@@ -16,7 +16,7 @@ class FilmsViewModel(private val repositoryInterface: FilmsRepositoryInterface) 
         myLiveData.value = AppState.Loading
         Thread {
             sleep(1000)
-            myLiveData.postValue(AppState.Success(repositoryInterface.getListFilms()))
+            myLiveData.postValue(AppState.Success(repositoryInterface.getFilm()))
         }.start()
     }
 

@@ -7,15 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmsreview.AppState
 import com.example.filmsreview.FilmClickListener
 import com.example.filmsreview.R
 import com.example.filmsreview.databinding.FragmentMainPageBinding
+import com.example.filmsreview.model.Film
 import com.example.filmsreview.model.FilmsViewModel
 import com.example.filmsreview.repository.FilmsList
-import com.example.filmsreview.repository.getFilmsList
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -66,20 +65,20 @@ class MainPage : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecyclerView(recyclerView, getFilmsList())
+        initRecyclerView(recyclerView)
 
         viewModel.getMyLiveData().observe(requireActivity(), {
             renderData(it)
-            adapter?.setFilm(getFilmsList())
+            adapter?.setFilm(Film.getFilmsList())
         })
         viewModel.getFilms()
     }
 
 
-    private fun initRecyclerView(recyclerView: RecyclerView?, films: List<FilmsList>) {
+    private fun initRecyclerView(recyclerView: RecyclerView?) {
         val lm = GridLayoutManager(context, 3)
         recyclerView?.layoutManager = lm
-        adapter = FilmsAdapter(this, getFilmsList())
+        adapter = FilmsAdapter(this)
         recyclerView?.adapter = adapter
         filmClickListenerFromMainPage?.let { adapter?.setOnFilmClickListener(it) }
     }

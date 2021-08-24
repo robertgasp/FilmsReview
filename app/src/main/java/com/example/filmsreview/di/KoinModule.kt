@@ -1,5 +1,6 @@
 package com.example.filmsreview.di
 
+import com.example.filmsreview.model.DescriptionViewModel
 import com.example.filmsreview.model.FilmsRepositoryInterface
 import com.example.filmsreview.model.FilmsViewModel
 import com.example.filmsreview.repository.FilmsRepository
@@ -12,4 +13,5 @@ val appModule = module {
     single<FilmsRepositoryInterface> { FilmsRepository() }
 
     viewModel { FilmsViewModel(get()) }
+    viewModel { DescriptionViewModel(get()) }
 }

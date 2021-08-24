@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.filmsreview.databinding.ActivityMainBinding
+import com.example.filmsreview.model.Film
 import com.example.filmsreview.repository.FilmsList
 import com.example.filmsreview.ui.DescriptionPage
 import com.example.filmsreview.ui.DescriptionPage.Companion.BUNDLE_EXTRA
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity(), FilmClickListener {
         return true
     }
 
-    override fun filmClicked(film: FilmsList) {
+    override fun filmClicked(film: Film) {
 
         val fragmentManager = this.supportFragmentManager
 

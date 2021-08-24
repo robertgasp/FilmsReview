@@ -1,14 +1,26 @@
 package com.example.filmsreview.repository
 
-import android.view.View
-import com.example.filmsreview.R
 import com.example.filmsreview.model.Film
 import com.example.filmsreview.model.FilmsRepositoryInterface
+import org.koin.core.component.getScopeId
 
 class FilmsRepository : FilmsRepositoryInterface {
 
-    override fun getListFilms(): List<FilmsList> = getFilmsList()
+    //в дальнейшем хочу использовать этот метод для получения подборок фильмов
+//    override fun getFilms(): List<FilmsList> = getFilmsList()
+    override fun getFilm(): List<Film> = Film.getFilmsList()
 
-    override fun getFilm() = FilmsList()
+    override fun getFilm(api_key: String, id: Int): Film {
+        val dataObj = FilmsListLoader.loadFilmList(api_key, id)
 
+        return Film(
+            id = dataObj?.film?.id,
+            logo_path = dataObj?.film?.logo_path,
+            name = dataObj?.film?.name,
+            release_date = dataObj?.film?.release_date,
+            genres = dataObj?.film?.genres,
+            vote_average = dataObj?.film?.vote_average,
+            overview = dataObj?.film?.overview
+        )
+    }
 }
