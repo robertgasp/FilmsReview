@@ -12,6 +12,7 @@ data class Film(
     private val logo_path: Int? = 0,
     private val name: String? = null,
     private val release_date: Int? = null,
+    private val origin_country: String? = null,
     private val genres: String? = null,
     private val vote_average: Double?,
     private val overview: String? = null
@@ -25,25 +26,29 @@ data class Film(
 
     fun getReleaseDate(): Int? = release_date
 
+    fun getOriginCountry():String? = origin_country
+
     fun getGenres(): String? = genres
+
+    fun getVoteAverahge():Double? = vote_average
 
     fun getOverView(): String? = overview
 
 
     companion object {
         fun getFilmsList(): List<Film> = listOf(
-            Film(500, R.drawable.unknown_cover, "Окулус", 1999, "Триллер", 8.5, "Фильм-страшилка"),
-            Film(500, R.drawable.unknown_cover, "Окулус", 1999, "Триллер", 8.5, "Фильм-страшилка"),
-            Film(500, R.drawable.unknown_cover, "Окулус", 1999, "Триллер", 8.5, "Фильм-страшилка"),
-            Film(500, R.drawable.unknown_cover, "Окулус", 1999, "Триллер", 8.5, "Фильм-страшилка"),
-            Film(500, R.drawable.unknown_cover, "Окулус", 1999, "Триллер", 8.5, "Фильм-страшилка"),
+            Film(500, R.drawable.unknown_cover, "Окулус", 1999, "Триллер", "The USA",8.5, "Фильм-страшилка"),
+            Film(500, R.drawable.unknown_cover, "Окулус", 1999, "Триллер", "The USA",8.5, "Фильм-страшилка"),
+            Film(500, R.drawable.unknown_cover, "Окулус", 1999, "Триллер", "The USA",8.5, "Фильм-страшилка"),
+            Film(500, R.drawable.unknown_cover, "Окулус", 1999, "Триллер", "The USA",8.5, "Фильм-страшилка"),
 
-            Film(600, R.drawable.unknown_cover, "Зеленая миля", 1999, "Драма", 9.1, ""),
-            Film(600, R.drawable.unknown_cover, "Зеленая миля", 1999, "Драма", 9.1, ""),
-            Film(600, R.drawable.unknown_cover, "Зеленая миля", 1999, "Драма", 9.1, ""),
-            Film(600, R.drawable.unknown_cover, "Зеленая миля", 1999, "Драма", 9.1, ""),
-            Film(600, R.drawable.unknown_cover, "Зеленая миля", 1999, "Драма", 9.1, ""),
-            Film(600, R.drawable.unknown_cover, "Зеленая миля", 1999, "Драма", 9.1, ""),
+            Film(600, R.drawable.unknown_cover, "Зеленая миля", 1999, "Драма", "The USA", 9.1, ""),
+            Film(600, R.drawable.unknown_cover, "Зеленая миля", 1999, "Драма", "The USA", 9.1, ""),
+            Film(600, R.drawable.unknown_cover, "Зеленая миля", 1999, "Драма", "The USA", 9.1, ""),
+            Film(600, R.drawable.unknown_cover, "Зеленая миля", 1999, "Драма", "The USA", 9.1, ""),
+            Film(600, R.drawable.unknown_cover, "Зеленая миля", 1999, "Драма", "The USA", 9.1, ""),
+            Film(600, R.drawable.unknown_cover, "Зеленая миля", 1999, "Драма", "The USA", 9.1, ""),
+
         )
     }
 

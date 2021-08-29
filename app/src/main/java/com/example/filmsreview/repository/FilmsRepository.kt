@@ -2,7 +2,6 @@ package com.example.filmsreview.repository
 
 import com.example.filmsreview.model.Film
 import com.example.filmsreview.model.FilmsRepositoryInterface
-import org.koin.core.component.getScopeId
 
 class FilmsRepository : FilmsRepositoryInterface {
 
@@ -18,6 +17,7 @@ class FilmsRepository : FilmsRepositoryInterface {
             logo_path = dataObj?.film?.logo_path,
             name = dataObj?.film?.name,
             release_date = dataObj?.film?.release_date,
+            origin_country=dataObj?.film?.origin_country,
             genres = dataObj?.film?.genres,
             vote_average = dataObj?.film?.vote_average,
             overview = dataObj?.film?.overview
