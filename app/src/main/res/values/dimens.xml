@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cover_width">100dp</dimen>
+    <dimen name="cover_height">100dp</dimen>
+    <dimen name="card_margin">15dp</dimen>
+    <dimen name="layout_margin_16">16dp</dimen>
+    <dimen name="image_description_size">200dp</dimen>
+    <dimen name="title_description_margin_top">30dp</dimen>
+    <dimen name="title_description_text_size">35sp</dimen>
+</resources>
