@@ -50,8 +50,7 @@ data class FactDataObj(
                     urlConnection = uri.openConnection() as HttpsURLConnection
                     urlConnection.requestMethod = "GET"
                     urlConnection.readTimeout = 10000
-                    val bufferedReader =
-                        BufferedReader(InputStreamReader(urlConnection.inputStream))
+                    val bufferedReader = BufferedReader(InputStreamReader(urlConnection.inputStream))
 
                     val lines = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                         getLinesForOld(bufferedReader)
