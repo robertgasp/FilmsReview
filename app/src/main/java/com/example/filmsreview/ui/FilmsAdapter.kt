@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.filmsreview.FilmClickListener
 import com.example.filmsreview.databinding.FilmCardMaketBinding
 import com.example.filmsreview.repository.rest.rest_entities.FactDataObj
-import com.squareup.picasso.Picasso
 
 class FilmsAdapter(
     private var fragment: Fragment
@@ -35,7 +34,7 @@ class FilmsAdapter(
 
     override fun onBindViewHolder(holder: FilmsHolder, position: Int) {
         holder.bind(filmData[position], holder.getBinding())
-        Picasso.get().load(filmData[position].posterPath).into(holder.binding2.cover);
+       // Picasso.get().load(filmData[position].posterPath).into(holder.binding2.cover);
     }
 
 
@@ -62,8 +61,8 @@ class FilmsAdapter(
             //  cover.  setImageResource(Picasso.get().load(film.logoPath))
             // film.logoPath.let { cover.setImageResource(it) }
             title.text = film.title
-            year.text = film.releaseDate.toString()
-            genre.text = film.genres
+            year.text = film.releaseDate
+            mediaType.text = film.mediaType
             root.setOnClickListener { onFilmClickListener(filmData[adapterPosition]) }
         }
 

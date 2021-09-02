@@ -3,7 +3,6 @@ package com.example.filmsreview.repository.rest.rest_entities
 import android.os.Build
 import android.os.Parcelable
 import androidx.annotation.RequiresApi
-import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
@@ -28,13 +27,14 @@ data class FactDataObj(
     @SerializedName("release_date")
     var releaseDate: String,
 
-    @SerializedName("origin_country")
-    var originCountry: String,
-    var genres: String,
+    @SerializedName("media_type")
+    var mediaType: String,
 
     @SerializedName("vote_average")
     var voteAverage: Double,
     var overview: String,
+    @SerializedName("adult")
+    var adult: Boolean,
 ) : Parcelable {
 
 
@@ -59,27 +59,23 @@ data class FactDataObj(
                         getLines(bufferedReader)
                     }
 
-                    val listOfFilms2 = Gson().fromJson(
-                        lines,
-                        FactDataObj::class.java
-                    )   //здесь у меня выдает строку-массив
 
-                    val jsonObject = JSONObject(listOfFilms2.toString())
+                    val jsonObject = JSONObject(lines)
                     val jsonArray = jsonObject.getJSONArray("results")
                     val filmsArray = ArrayList<FactDataObj>()
 
                     for (i in 0..jsonArray.length() - 1) {
-                        val oneFilm = FactDataObj(0, "0", "", "0", "0", "0", 0.0, "0")
+                        val oneFilm = FactDataObj(0, "0", "", "0", "0", 0.0, "0.0", false)
                         oneFilm.id = jsonArray.getJSONObject(i).getInt("id")
                         oneFilm.posterPath =
                             "https://image.tmdb.org/t/p/original" + jsonArray.getJSONObject(i)
                                 .getString("poster_path")
                         oneFilm.releaseDate = jsonArray.getJSONObject(i).getString("release_date")
-                        oneFilm.originCountry =
-                            jsonArray.getJSONObject(i).getString("origin_country")
-                        oneFilm.genres = jsonArray.getJSONObject(i).getString("genres")
+                        oneFilm.mediaType = jsonArray.getJSONObject(i).getString("media_type")
                         oneFilm.voteAverage = jsonArray.getJSONObject(i).getDouble("vote_average")
                         oneFilm.overview = jsonArray.getJSONObject(i).getString("overview")
+                        oneFilm.adult =
+                            jsonArray.getJSONObject(i).getBoolean("adult")
                         filmsArray.add(oneFilm)
                     }
                     return filmsArray

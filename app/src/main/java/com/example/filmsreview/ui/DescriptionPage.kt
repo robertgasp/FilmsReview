@@ -51,7 +51,7 @@ class DescriptionPage : Fragment() {
                                 ?.let { it1 -> cover.setImageResource(it1.toInt()) }
                             title.text = appState.filmsData[0]?.title
                             year.text = appState.filmsData[0].releaseDate.toString()
-                            genre.text = appState.filmsData[0].genres
+                            mediaType.text = appState.filmsData[0].mediaType
                             description.text = appState.filmsData[0].overview
                             //filmId=appState.filmsData[0].id
                         }

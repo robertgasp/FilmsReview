@@ -17,10 +17,10 @@ class FilmsRepository : FilmsRepositoryInterface {
             posterPath = dataObj?.film?.posterPath,
             title = dataObj?.film?.title,
             releaseDate = dataObj?.film?.releaseDate,
-            originCountry = dataObj?.film.originCountry,
-            genres = dataObj?.film?.genres,
+            mediaType = dataObj?.film?.mediaType,
             voteAverage = dataObj?.film?.voteAverage,
-            overview = dataObj?.film?.overview
+            overview = dataObj?.film?.overview,
+            adult = dataObj?.film.adult
         )
     }
 }
