@@ -2,7 +2,7 @@ package com.example.filmsreview.repository
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.example.filmsreview.repository.rest_entities.FilmsListDataObj
+import com.example.filmsreview.repository.rest.rest_entities.FilmsListDataObj
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -16,9 +16,11 @@ import javax.net.ssl.HttpsURLConnection
 
 object FilmsListLoader {
 
-    fun loadFilmList(api_key: String, id: Int): FilmsListDataObj? {
+    fun loadFilmList(id: String?): FilmsListDataObj? {
+
         try {
-            val uri = URL("https://api.themoviedb.org/3/movie/$id?api_key=$api_key")
+            val apiKey = "0bca8a77230116b8ac43cd3b8634aca9"
+            val uri = URL("https://api.themoviedb.org/3/movie/$id?api_key=$apiKey")
 
             lateinit var urlConnection: HttpURLConnection
             try {
@@ -29,6 +31,7 @@ object FilmsListLoader {
                 )
                 urlConnection.readTimeout = 10000
                 val bufferedReader = BufferedReader(InputStreamReader(urlConnection.inputStream))
+
                 val lines = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                     getLinesForOld(bufferedReader)
                 } else {

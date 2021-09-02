@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.RequestQueue
+import com.android.volley.toolbox.Volley
 import com.example.filmsreview.AppState
 import com.example.filmsreview.FilmClickListener
 import com.example.filmsreview.R
@@ -15,6 +17,8 @@ import com.example.filmsreview.databinding.FragmentMainPageBinding
 import com.example.filmsreview.model.Film
 import com.example.filmsreview.model.FilmsViewModel
 import com.example.filmsreview.repository.FilmsList
+import com.example.filmsreview.repository.FilmsRepository
+import com.example.filmsreview.repository.rest.rest_entities.FactDataObj
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -26,6 +30,8 @@ class MainPage : Fragment() {
 
     private var bottomNavigation: BottomNavigationView? = null
     private var filmClickListenerFromMainPage: FilmClickListener? = null
+
+    private var repository:FilmsRepository?=null
 
     private var _binding: FragmentMainPageBinding? = null
     private val binding get() = _binding!!
@@ -69,7 +75,8 @@ class MainPage : Fragment() {
 
         viewModel.getMyLiveData().observe(requireActivity(), {
             renderData(it)
-            adapter?.setFilm(Film.getFilmsList())
+//            adapter?.setFilm(FactDataObj.getFilmsListFromInternet()!!)
+            adapter?.setFilm(repository?.getFilmFromInternet()!!)
         })
         viewModel.getFilms()
     }

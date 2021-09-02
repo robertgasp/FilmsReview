@@ -10,4 +10,4 @@ data class FilmsList(val film: Film = getDefaultFilm()) : Parcelable
 
 
 fun getDefaultFilm(): Film =
-    Film(500, R.drawable.unknown_cover, "Окулус", 1999, "Триллер", 8.5, "Фильм-страшилка")
+    Film("500", R.drawable.unknown_cover, "Окулус", 1999, "Триллер", 8.5, "Фильм-страшилка")

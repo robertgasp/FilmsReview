@@ -1,25 +1,25 @@
 package com.example.filmsreview.repository
 
-import com.example.filmsreview.model.Film
 import com.example.filmsreview.model.FilmsRepositoryInterface
-import org.koin.core.component.getScopeId
+import com.example.filmsreview.repository.rest.rest_entities.FactDataObj
 
 class FilmsRepository : FilmsRepositoryInterface {
 
-    //в дальнейшем хочу использовать этот метод для получения подборок фильмов
-//    override fun getFilms(): List<FilmsList> = getFilmsList()
-    override fun getFilm(): List<Film> = Film.getFilmsList()
 
-    override fun getFilm(api_key: String, id: Int): Film {
-        val dataObj = FilmsListLoader.loadFilmList(api_key, id)
+    override fun getFilmFromInternet(): List<FactDataObj>? = FactDataObj.getFilmsListFromInternet()
 
-        return Film(
-            id = dataObj?.film?.id,
-            logo_path = dataObj?.film?.logo_path,
-            name = dataObj?.film?.name,
-            release_date = dataObj?.film?.release_date,
+
+    override fun getFilm(id: String?): FactDataObj {
+        val dataObj = FilmsListLoader.loadFilmList(id)
+
+        return FactDataObj(
+            id = dataObj?.film!!.id,
+            posterPath = dataObj?.film?.posterPath,
+            title = dataObj?.film?.title,
+            releaseDate = dataObj?.film?.releaseDate,
+            originCountry = dataObj?.film.originCountry,
             genres = dataObj?.film?.genres,
-            vote_average = dataObj?.film?.vote_average,
+            voteAverage = dataObj?.film?.voteAverage,
             overview = dataObj?.film?.overview
         )
     }

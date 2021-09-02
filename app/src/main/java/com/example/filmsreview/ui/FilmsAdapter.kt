@@ -8,19 +8,18 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmsreview.FilmClickListener
 import com.example.filmsreview.databinding.FilmCardMaketBinding
-import com.example.filmsreview.model.Film
-import com.example.filmsreview.repository.FilmsList
+import com.example.filmsreview.repository.rest.rest_entities.FactDataObj
+import com.squareup.picasso.Picasso
 
 class FilmsAdapter(
     private var fragment: Fragment
-
 ) : RecyclerView.Adapter<FilmsAdapter.FilmsHolder>() {
 
-    private var filmData: List<Film> = listOf()
+    private var filmData: List<FactDataObj> = listOf()
     private var filmClickListener: FilmClickListener? = null
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setFilm(films: List<Film>) {
+    fun setFilm(films: List<FactDataObj>) {
         filmData = films
         notifyDataSetChanged()
     }
@@ -28,14 +27,15 @@ class FilmsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmsHolder {
 
-       val binding = FilmCardMaketBinding.inflate(
+        val binding = FilmCardMaketBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
         return FilmsHolder(binding.root, binding)
     }
 
     override fun onBindViewHolder(holder: FilmsHolder, position: Int) {
-        holder.bind(filmData[position],holder.getBinding())
+        holder.bind(filmData[position], holder.getBinding())
+        Picasso.get().load(filmData[position].posterPath).into(holder.binding2.cover);
     }
 
 
@@ -47,28 +47,30 @@ class FilmsAdapter(
         this.filmClickListener = filmClickListenerFromMainPage
     }
 
-    fun onFilmClickListener(film: Film) {
+    fun onFilmClickListener(film: FactDataObj) {
         filmClickListener?.let {
             filmClickListener?.filmClicked(film)
         }
     }
 
-    inner class FilmsHolder(itemView: View, binding: FilmCardMaketBinding) : RecyclerView.ViewHolder(itemView) {
-         var binding2 = binding
+    inner class FilmsHolder(itemView: View, binding: FilmCardMaketBinding) :
+        RecyclerView.ViewHolder(itemView) {
+        var binding2 = binding
             get() = field
 
-        fun bind(film: Film, field:FilmCardMaketBinding) = with(field) {
-            film.getLogoPath()?.let { cover.setImageResource(it) }
-            title.text = film.getName()
-            year.text = film.getReleaseDate().toString()
-            genre.text = film.getGenres()
+        fun bind(film: FactDataObj, field: FilmCardMaketBinding) = with(field) {
+            //  cover.  setImageResource(Picasso.get().load(film.logoPath))
+            // film.logoPath.let { cover.setImageResource(it) }
+            title.text = film.title
+            year.text = film.releaseDate.toString()
+            genre.text = film.genres
             root.setOnClickListener { onFilmClickListener(filmData[adapterPosition]) }
         }
 
 
-            fun getBinding(): FilmCardMaketBinding {
-                val field2=binding2
-                return field2
-            }
+        fun getBinding(): FilmCardMaketBinding {
+            val field2 = binding2
+            return field2
+        }
     }
 }

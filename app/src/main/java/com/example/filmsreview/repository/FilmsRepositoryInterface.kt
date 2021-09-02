@@ -2,12 +2,10 @@ package com.example.filmsreview.model
 
 import android.view.View
 import com.example.filmsreview.repository.FilmsList
+import com.example.filmsreview.repository.rest.rest_entities.FactDataObj
+import com.example.filmsreview.repository.rest.rest_entities.FilmsListDataObj
 
 interface FilmsRepositoryInterface {
-    //fun getFilmList(): List<FilmsList>
-    fun getFilm(): List<Film>
-    fun getFilm(
-        api_key: String,
-        id: Int
-    ): Film
+    fun getFilmFromInternet(): List<FactDataObj>?
+    fun getFilm(id: String?): FactDataObj
 }

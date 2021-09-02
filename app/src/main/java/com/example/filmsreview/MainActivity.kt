@@ -9,6 +9,7 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.filmsreview.databinding.ActivityMainBinding
 import com.example.filmsreview.model.Film
 import com.example.filmsreview.repository.FilmsList
+import com.example.filmsreview.repository.rest.rest_entities.FactDataObj
 import com.example.filmsreview.ui.DescriptionPage
 import com.example.filmsreview.ui.DescriptionPage.Companion.BUNDLE_EXTRA
 import com.example.filmsreview.ui.MainPage
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity(), FilmClickListener {
         return true
     }
 
-    override fun filmClicked(film: Film) {
+    override fun filmClicked(film: FactDataObj) {
 
         val fragmentManager = this.supportFragmentManager
 

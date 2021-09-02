@@ -9,7 +9,6 @@ import com.example.filmsreview.AppState
 import com.example.filmsreview.databinding.FragmentDescriptionPageBinding
 import com.example.filmsreview.model.DescriptionViewModel
 import com.example.filmsreview.model.Film
-import com.example.filmsreview.repository.FilmsList
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -18,6 +17,7 @@ class DescriptionPage : Fragment() {
     private var _binding: FragmentDescriptionPageBinding? = null
     private val binding get() = _binding!!
     private val descriptionViewModel: DescriptionViewModel by viewModel()
+    private var filmId:String?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,16 +47,17 @@ class DescriptionPage : Fragment() {
                         is AppState.Success -> {
                             loadingLayout.visibility = View.GONE
                             descriptionView.visibility = View.VISIBLE
-                            appState.filmsData[0].getLogoPath()
-                                ?.let { it1 -> cover.setImageResource(it1) }
-                            title.text = appState.filmsData[0].getName().toString()
-                            year.text = appState.filmsData[0].getReleaseDate().toString()
-                            genre.text = appState.filmsData[0].getGenres()
-                            description.text = appState.filmsData[0].getOverView()
+                            appState.filmsData!![0].posterPath
+                                ?.let { it1 -> cover.setImageResource(it1.toInt()) }
+                            title.text = appState.filmsData[0]?.title
+                            year.text = appState.filmsData[0].releaseDate.toString()
+                            genre.text = appState.filmsData[0].genres
+                            description.text = appState.filmsData[0].overview
+                            //filmId=appState.filmsData[0].id
                         }
                     }
                 })
-                descriptionViewModel.loadData("0bca8a77230116b8ac43cd3b8634aca9", id)
+                descriptionViewModel.loadData("550")
             }
         }
     }
