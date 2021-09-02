@@ -75,7 +75,7 @@ class MainPage : Fragment() {
 
         viewModel.getMyLiveData().observe(requireActivity(), {
             renderData(it)
-//            adapter?.setFilm(FactDataObj.getFilmsListFromInternet()!!)
+            //adapter?.setFilm(FactDataObj.getFilmsListFromInternet()!!)
             adapter?.setFilm(repository?.getFilmFromInternet()!!)
         })
         viewModel.getFilms()
