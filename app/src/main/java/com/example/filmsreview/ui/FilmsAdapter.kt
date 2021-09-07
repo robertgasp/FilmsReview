@@ -16,6 +16,8 @@ class FilmsAdapter(
 
     private var filmData: List<FactDataObj> = listOf()
     private var filmClickListener: FilmClickListener? = null
+    private var newLine:List<FactDataObj> = listOf()
+
 
     @SuppressLint("NotifyDataSetChanged")
     fun setFilm(films: List<FactDataObj>) {
@@ -52,6 +54,7 @@ class FilmsAdapter(
         }
     }
 
+
     inner class FilmsHolder(itemView: View, binding: FilmCardMaketBinding) :
         RecyclerView.ViewHolder(itemView) {
         var binding2 = binding
@@ -62,7 +65,10 @@ class FilmsAdapter(
             // film.logoPath.let { cover.setImageResource(it) }
             title.text = film.title
             year.text = film.releaseDate
-            mediaType.text = film.mediaType
+
+            if (film.mediaType == "movie") {
+                mediaType.text = "Фильм"
+            }else mediaType.text = film.mediaType
             root.setOnClickListener { onFilmClickListener(filmData[adapterPosition]) }
         }
 
