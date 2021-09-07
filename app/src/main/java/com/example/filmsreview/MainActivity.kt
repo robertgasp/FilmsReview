@@ -18,7 +18,6 @@ import org.koin.android.ext.android.bind
 class MainActivity : AppCompatActivity(), FilmClickListener {
     val toolbar: Toolbar? = null
     private lateinit var binding: ActivityMainBinding
-    private lateinit var bundle: Bundle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

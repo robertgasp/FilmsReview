@@ -18,14 +18,13 @@ object ApiUtils {
             val request = original.newBuilder()
                 .header(
                     "Authorization",
-                    "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwYmNhOGE3NzIzMDExNmI4YWM0M2NkM2I4NjM0YWNhOSIsInN1YiI6IjYxMGVjY2M5YWUzODQzMDAzMDY4NTA0ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.m4TwF9F_jh0DRDGy3qSbqH6r0MeC_TB6DBTcGrkbr5w"
+                    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwYmNhOGE3NzIzMDExNmI4YWM0M2NkM2I4NjM0YWNhOSIsInN1YiI6IjYxMGVjY2M5YWUzODQzMDAzMDY4NTA0ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.m4TwF9F_jh0DRDGy3qSbqH6r0MeC_TB6DBTcGrkbr5w"
                 )
+                .header("Content-Type","application/json;charset=utf-8")
                 .method(original.method(), original.body())
                 .build()
             chain.proceed(request)
         }
         return httpClient.build()
     }
-
-
 }
