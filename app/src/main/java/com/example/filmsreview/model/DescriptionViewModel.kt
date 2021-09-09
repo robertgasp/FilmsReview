@@ -17,6 +17,4 @@ class DescriptionViewModel(private val repositoryInterface: FilmsRepositoryInter
             liveDataToDescribe.postValue(AppState.Success(listOf(data)))
         }.start()
     }
-
-
 }

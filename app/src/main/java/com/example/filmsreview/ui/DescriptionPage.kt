@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import com.example.filmsreview.AppState
 import com.example.filmsreview.databinding.FragmentDescriptionPageBinding
 import com.example.filmsreview.model.DescriptionViewModel
-import com.example.filmsreview.model.Film
+import com.example.filmsreview.repository.rest.rest_entities.FactDataObj
+import com.squareup.picasso.Picasso
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -17,7 +18,7 @@ class DescriptionPage : Fragment() {
     private var _binding: FragmentDescriptionPageBinding? = null
     private val binding get() = _binding!!
     private val descriptionViewModel: DescriptionViewModel by viewModel()
-    private var filmId:String?=null
+    private var filmId: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +30,8 @@ class DescriptionPage : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val film = arguments?.getParcelable<Film>(BUNDLE_EXTRA)
+        val film = arguments?.getParcelable<FactDataObj>(BUNDLE_EXTRA)
+
         film?.let {
             with(binding) {
 
@@ -47,17 +49,22 @@ class DescriptionPage : Fragment() {
                         is AppState.Success -> {
                             loadingLayout.visibility = View.GONE
                             descriptionView.visibility = View.VISIBLE
-                            appState.filmsData!![0].posterPath
-                                ?.let { it1 -> cover.setImageResource(it1.toInt()) }
-                            title.text = appState.filmsData[0]?.title
-                            year.text = appState.filmsData[0].releaseDate.toString()
+
+                            Picasso
+                                .get()
+                                .load("https://image.tmdb.org/t/p/original" + appState.filmsData!![0].posterPath)
+                                .fit()
+                                .into(cover)
+
+                            title.text = appState.filmsData[0].title
+                            year.text = appState.filmsData[0].releaseDate
                             mediaType.text = appState.filmsData[0].mediaType
                             description.text = appState.filmsData[0].overview
-                            //filmId=appState.filmsData[0].id
+                            filmId = appState.filmsData[0].id
                         }
                     }
                 })
-                descriptionViewModel.loadData("550")
+                descriptionViewModel.loadData(film.id.toString())
             }
         }
     }
