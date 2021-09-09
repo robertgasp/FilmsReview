@@ -1,8 +1,10 @@
 package com.example.filmsreview.repository.rest.rest_entities
 
+import android.util.Log
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+
 
 object FilmRepo {
     val api:FilmsAPI by lazy{
@@ -14,5 +16,4 @@ object FilmRepo {
 
         adapter.create(FilmsAPI::class.java)
     }
-
 }

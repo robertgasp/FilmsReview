@@ -10,13 +10,11 @@ class DescriptionViewModel(private val repositoryInterface: FilmsRepositoryInter
 
     val liveDataToDescribe: MutableLiveData<AppState> = MutableLiveData()
 
-    fun loadData(id: Int?) {
+    fun loadData(id: String?) {
         liveDataToDescribe.value = AppState.Loading
         Thread {
             val data = repositoryInterface.getFilm(id)
             liveDataToDescribe.postValue(AppState.Success(listOf(data)))
         }.start()
     }
-
-
 }

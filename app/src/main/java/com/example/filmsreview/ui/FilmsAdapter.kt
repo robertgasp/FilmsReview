@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.filmsreview.FilmClickListener
 import com.example.filmsreview.databinding.FilmCardMaketBinding
 import com.example.filmsreview.repository.rest.rest_entities.FactDataObj
+import com.squareup.picasso.Picasso
 
 class FilmsAdapter(
     private var fragment: Fragment
@@ -63,6 +64,11 @@ class FilmsAdapter(
         fun bind(film: FactDataObj, field: FilmCardMaketBinding) = with(field) {
             //  cover.  setImageResource(Picasso.get().load(film.logoPath))
             // film.logoPath.let { cover.setImageResource(it) }
+            Picasso
+                .get()
+                .load(film.posterPath)
+                .fit()
+                .into(cover)
             title.text = film.title
             year.text = film.releaseDate
 

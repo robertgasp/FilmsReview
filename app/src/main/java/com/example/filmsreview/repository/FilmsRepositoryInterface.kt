@@ -7,5 +7,5 @@ import com.example.filmsreview.repository.rest.rest_entities.FilmsListDataObj
 
 interface FilmsRepositoryInterface {
     fun getFilmFromInternet(): List<FactDataObj>?
-    fun getFilm(id: Int?): FactDataObj
+    fun getFilm(id: String?): FactDataObj
 }

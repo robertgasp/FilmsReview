@@ -9,6 +9,7 @@ import com.example.filmsreview.AppState
 import com.example.filmsreview.databinding.FragmentDescriptionPageBinding
 import com.example.filmsreview.model.DescriptionViewModel
 import com.example.filmsreview.repository.rest.rest_entities.FactDataObj
+import com.squareup.picasso.Picasso
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -17,7 +18,7 @@ class DescriptionPage : Fragment() {
     private var _binding: FragmentDescriptionPageBinding? = null
     private val binding get() = _binding!!
     private val descriptionViewModel: DescriptionViewModel by viewModel()
-    private var filmId:Int?=null
+    private var filmId: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,24 +50,21 @@ class DescriptionPage : Fragment() {
                             loadingLayout.visibility = View.GONE
                             descriptionView.visibility = View.VISIBLE
 
-//                            appState.filmsData!![0].posterPath
-//                                ?.let { it1 -> cover.setImageResource(it1.toInt()) }
-                            title.text = appState.filmsData!![0].title
+                            Picasso
+                                .get()
+                                .load("https://image.tmdb.org/t/p/original" + appState.filmsData!![0].posterPath)
+                                .fit()
+                                .into(cover)
+
+                            title.text = appState.filmsData[0].title
                             year.text = appState.filmsData[0].releaseDate
                             mediaType.text = appState.filmsData[0].mediaType
                             description.text = appState.filmsData[0].overview
-                            filmId=appState.filmsData[0].id
-
-
-//                            title.text = film.title
-//                            year.text = film.releaseDate
-//                            mediaType.text = film.mediaType
-//                            description.text = film.overview
-//                            filmId=film.id
+                            filmId = appState.filmsData[0].id
                         }
                     }
                 })
-                descriptionViewModel.loadData(film.id)
+                descriptionViewModel.loadData(film.id.toString())
             }
         }
     }
