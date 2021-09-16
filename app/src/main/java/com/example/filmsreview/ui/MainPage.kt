@@ -10,9 +10,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmsreview.AppState
+import com.example.filmsreview.Exeptions.MyString.Companion.activity
 import com.example.filmsreview.FilmClickListener
+import com.example.filmsreview.MainActivity
 import com.example.filmsreview.R
 import com.example.filmsreview.databinding.FragmentMainPageBinding
+import com.example.filmsreview.model.ClickToSaveComments
 import com.example.filmsreview.model.FilmsRepositoryInterface
 import com.example.filmsreview.model.FilmsViewModel
 import com.example.filmsreview.repository.FilmsList
@@ -30,16 +33,14 @@ class MainPage : Fragment() {
     private var bottomNavigation: BottomNavigationView? = null
     private var filmClickListenerFromMainPage: FilmClickListener? = null
 
-    private lateinit var repository:FilmsRepositoryInterface
+    private lateinit var repository: FilmsRepositoryInterface
 
     private var _binding: FragmentMainPageBinding? = null
     private val binding get() = _binding!!
     private var recyclerView: RecyclerView? = null
     private var adapter: FilmsAdapter? = null
-    private var films: List<FilmsList>? = null
-
-    private var isBound = false
-    private var loadFilmsFromInternetService: LoadFilmsFromInternetService.ServiceBinder? = null
+    private var isAdult: Boolean? = false
+    private val IS_ADULTS_MODE = "IS_ADULTS_MODE"
 
 
     override fun onAttach(context: Context) {
@@ -74,12 +75,18 @@ class MainPage : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        isAdult = initDataSet()
+
         initRecyclerView(recyclerView)
 
         viewModel.getMyLiveData().observe(requireActivity(), {
             renderData(it)
             Log.d("Error", FactDataObj.getFilmsListFromInternet().toString())
-            adapter?.setFilm(FactDataObj.filmsArray)
+
+            if (isAdult == true) {
+                adapter?.setFilm(FactDataObj.filmsArray)
+            } else adapter?.setFilm(FactDataObj.filmsArray18free)
         })
         viewModel.getFilms()
     }
@@ -98,7 +105,11 @@ class MainPage : Fragment() {
         when (appState) {
             is AppState.Success -> {
                 loadingLayout.visibility = View.GONE
-                Snackbar.make(binding.bottomMenu, getString(R.string.Loading_success), Snackbar.LENGTH_LONG)
+                Snackbar.make(
+                    binding.bottomMenu,
+                    getString(R.string.Loading_success),
+                    Snackbar.LENGTH_LONG
+                )
                     .show()
             }
             is AppState.Loading -> {
@@ -117,6 +128,16 @@ class MainPage : Fragment() {
             }
             null -> TODO()
         }
+    }
+
+
+    private fun initDataSet(): Boolean? {
+        activity.let { it2 ->
+            it2?.getPreferences(Context.MODE_PRIVATE)?.let { preferences ->
+                isAdult = preferences.getBoolean(IS_ADULTS_MODE, false)
+            }
+        }
+        return isAdult
     }
 
 

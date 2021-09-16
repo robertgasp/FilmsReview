@@ -14,7 +14,8 @@ class DescriptionViewModel(private val repositoryInterface: FilmsRepositoryInter
         liveDataToDescribe.value = AppState.Loading
         Thread {
             val data = repositoryInterface.getFilm(id)
-            liveDataToDescribe.postValue(AppState.Success(listOf(data)))
+            val dataForDB = repositoryInterface.getComment(id)
+            liveDataToDescribe.postValue(AppState.SuccessDB(data, dataForDB))
         }.start()
     }
 }

@@ -21,7 +21,7 @@ class FilmsAdapter(
 
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setFilm(films: List<FactDataObj>) {
+    fun setFilm(films: ArrayList<FactDataObj>) {
         filmData = films
         notifyDataSetChanged()
     }
@@ -37,7 +37,6 @@ class FilmsAdapter(
 
     override fun onBindViewHolder(holder: FilmsHolder, position: Int) {
         holder.bind(filmData[position], holder.getBinding())
-       // Picasso.get().load(filmData[position].posterPath).into(holder.binding2.cover);
     }
 
 

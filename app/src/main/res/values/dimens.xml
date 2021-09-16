@@ -7,4 +7,5 @@
     <dimen name="image_description_size">200dp</dimen>
     <dimen name="title_description_margin_top">30dp</dimen>
     <dimen name="title_description_text_size">20sp</dimen>
+    <dimen name="comments_field">80dp</dimen>
 </resources>

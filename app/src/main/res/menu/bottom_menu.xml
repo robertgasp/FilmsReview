@@ -3,19 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_search"
-        android:title="rrrr"
-        android:icon="@android:drawable/ic_menu_search"
+        android:title="Фильмы"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_one"
-        android:title="rrrr"
-
+        android:title="История"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_two"
         app:showAsAction="never"
-        android:title="TODO" />
+        android:title="Избранное" />
 
 </menu>

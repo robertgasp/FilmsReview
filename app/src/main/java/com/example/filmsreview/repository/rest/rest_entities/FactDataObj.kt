@@ -3,6 +3,7 @@ package com.example.filmsreview.repository.rest.rest_entities
 import android.os.Build
 import android.os.Parcelable
 import androidx.annotation.RequiresApi
+import com.example.filmsreview.MainActivity
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
@@ -42,14 +43,21 @@ data class FactDataObj(
 
 
     companion object {
+        var filmsArray18free = ArrayList<FactDataObj>()
         var filmsArray = ArrayList<FactDataObj>()
+        var mainActivity = MainActivity()
+        var isAdult: Boolean? = null
+
         fun getFilmsListFromInternet(): List<FactDataObj> {
+
             val uri =
                 URL("https://api.themoviedb.org/3/trending/movie/day?api_key=0bca8a77230116b8ac43cd3b8634aca9&language=ru-RU")
 
             lateinit var urlConnection: HttpURLConnection
 
             try {
+                isAdult = mainActivity.getAdultMode()
+
                 urlConnection = uri.openConnection() as HttpsURLConnection
                 urlConnection.requestMethod = "GET"
                 urlConnection.readTimeout = 10000
@@ -63,6 +71,7 @@ data class FactDataObj(
 
                 val jsonObject = JSONObject(lines)
                 val jsonArray = jsonObject.getJSONArray("results")
+                val tempFilmsArray18free = ArrayList<FactDataObj>()
                 val tempFilmsArray = ArrayList<FactDataObj>()
 
                 for (i in 0..jsonArray.length() - 1) {
@@ -78,10 +87,20 @@ data class FactDataObj(
                     oneFilm.overview = jsonArray.getJSONObject(i).getString("overview")
                     oneFilm.adult =
                         jsonArray.getJSONObject(i).getBoolean("adult")
-                    tempFilmsArray.add(oneFilm)
+
+                    tempFilmsArray.add(oneFilm)//грузим все фильмы подряд: и без ограничений 18+, и с ограничениями
+
+                    if (oneFilm.adult == false) {   //если isAdult == true, то грузим только с false
+                        tempFilmsArray18free.add(oneFilm)
+                    }
+
                 }
+                filmsArray18free = tempFilmsArray18free
                 filmsArray = tempFilmsArray
-                return tempFilmsArray
+
+                if (isAdult == true) {
+                    return tempFilmsArray
+                } else return tempFilmsArray18free
 
             } catch (e: Exception) {
                 e.printStackTrace()

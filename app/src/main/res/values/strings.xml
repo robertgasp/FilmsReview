@@ -9,4 +9,7 @@
     <string name="Loading_success">Загрузка прошла успешно</string>
     <string name="Error">Error</string>
     <string name="Error_rus">Ошибка</string>
+    <string name="item_name_18">18+</string>
+    <string name="save_comment">Сохр.</string>
+    <string name="comments">Комментарии</string>
 </resources>
