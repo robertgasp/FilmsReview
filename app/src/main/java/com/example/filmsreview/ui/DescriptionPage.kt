@@ -113,6 +113,7 @@ class DescriptionPage : Fragment() {
             }
         }
 
+        
 
         binding.saveComments.setOnClickListener(View.OnClickListener {
             hideKeyboardFrom(requireContext(),view)
