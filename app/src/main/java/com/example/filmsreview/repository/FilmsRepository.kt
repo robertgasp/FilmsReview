@@ -1,5 +1,6 @@
 package com.example.filmsreview.repository
 
+import android.util.Log
 import com.example.filmsreview.model.ClickToSaveComments
 import com.example.filmsreview.model.FilmsRepositoryInterface
 import com.example.filmsreview.model.database.comments.CommentsEntity
@@ -14,7 +15,7 @@ class FilmsRepository : FilmsRepositoryInterface, ClickToSaveComments {
 
     override fun getFilmFromInternet(): List<FactDataObj> = FactDataObj.getFilmsListFromInternet()
 
-    override fun getFilm(id: String?): FactDataObj {
+    override fun getFilm(id: Int?): FactDataObj {
         val lang = "ru-RU"
         val dataObj = FilmRepo.api.getOneFilmFromInternet(id, lang).execute().body()
 
@@ -31,17 +32,18 @@ class FilmsRepository : FilmsRepositoryInterface, ClickToSaveComments {
     }
 
 
-    override fun getComment(id: String?): FactDataObjForDB =
+    override fun getComment(id: Int?): FactDataObjForDB =
         convertEntityToComment(id)
 
-    private fun convertEntityToComment(id: String?): FactDataObjForDB {
+    private fun convertEntityToComment(id: Int?): FactDataObjForDB {
         lateinit var factDataObjForDB: FactDataObjForDB
         id?.let {
             val dataFromDB = DataBaseOfComments.db.commentsDao().getDataById(id.toLong())
+            Log.i("dataFromDB", "=" + dataFromDB.toString())  //почему-то не читает
 
-            factDataObjForDB = if (dataFromDB.id != null) {
+            factDataObjForDB = if (dataFromDB != null) {
                 FactDataObjForDB(
-                    FactDataObj(dataFromDB.id.toInt()),
+                    FactDataObj(dataFromDB.id?.toInt()),
                     dataFromDB.dateOfWatching,
                     dataFromDB.userComments
                 )
@@ -61,6 +63,7 @@ class FilmsRepository : FilmsRepositoryInterface, ClickToSaveComments {
                     factDataObjForDB.userComments
                 )
             )
+        Log.i("userComment", "=" + factDataObjForDB.userComments)
     }
 
 

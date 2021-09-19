@@ -8,8 +8,8 @@ import com.example.filmsreview.repository.rest.rest_entities.FilmsListDataObj
 
 interface FilmsRepositoryInterface {
     fun getFilmFromInternet(): List<FactDataObj>?
-    fun getFilm(id: String?): FactDataObj
+    fun getFilm(id: Int?): FactDataObj
     fun getAllHistory(): List<FactDataObjForDB>
-    fun getComment(id: String?): FactDataObjForDB
+    fun getComment(id: Int?): FactDataObjForDB
     fun saveEntity(factDataObjForDB: FactDataObjForDB)
 }

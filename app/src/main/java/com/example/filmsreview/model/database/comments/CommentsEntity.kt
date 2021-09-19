@@ -11,8 +11,8 @@ import java.util.*
 
 @Entity
 data class CommentsEntity(
-    @PrimaryKey(autoGenerate = true) val id:Long?,
-    val dateOfWatching : String,
+    @PrimaryKey(autoGenerate = true) val id: Long?,
+    val dateOfWatching: String,
     val userComments: String
 
     //@Embedded val factDataObj: FactDataObj

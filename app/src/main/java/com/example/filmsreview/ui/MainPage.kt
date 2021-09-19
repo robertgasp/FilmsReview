@@ -105,12 +105,12 @@ class MainPage : Fragment() {
         when (appState) {
             is AppState.Success -> {
                 loadingLayout.visibility = View.GONE
-                Snackbar.make(
+                /*Snackbar.make(
                     binding.bottomMenu,
                     getString(R.string.Loading_success),
                     Snackbar.LENGTH_LONG
                 )
-                    .show()
+                    .show()*/
             }
             is AppState.Loading -> {
                 loadingLayout.visibility = View.VISIBLE

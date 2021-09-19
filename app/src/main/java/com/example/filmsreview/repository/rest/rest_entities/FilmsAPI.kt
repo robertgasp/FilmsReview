@@ -11,7 +11,7 @@ interface FilmsAPI {
     @GET("movie/{id}")
 
     fun getOneFilmFromInternet(
-        @Path("id")id:String?,
+        @Path("id")id:Int?,
         @Query("language") lang: String
     ): Call<FactDataObj>
 

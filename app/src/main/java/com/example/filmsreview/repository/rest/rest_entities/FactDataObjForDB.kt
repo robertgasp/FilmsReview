@@ -10,6 +10,7 @@ import java.util.*
 data class FactDataObjForDB(
     val factDataObj: FactDataObj,
     var dateOfWatchig: String,
-    val userComments: String
-) :Parcelable{
+    var userComments: String
+) : Parcelable {
+
 }

@@ -1,13 +1,16 @@
 package com.example.filmsreview.ui
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -34,6 +37,7 @@ class DescriptionPage : Fragment() {
     private var filmId: Int? = null
     private var clickToSaveComments: ClickToSaveComments? = null
     private var userComments: String? = null
+    private lateinit var factDataObjForDB: FactDataObjForDB
     val repositoryInterface: FilmsRepositoryInterface? = null
     private val historyViewModel: HistoryViewModel by viewModel()
 
@@ -61,9 +65,6 @@ class DescriptionPage : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val film = arguments?.getParcelable<FactDataObj>(BUNDLE_EXTRA)
-
-        val getComments = historyViewModel.getAllHistory()
-
 
         film?.let {
             with(binding) {
@@ -98,37 +99,24 @@ class DescriptionPage : Fragment() {
                             }
 
                             appState.filmsDataDB.let {
-                                binding.userComments.text =
-                                    appState.filmsDataDB.userComments as Editable
+                                factDataObjForDB = appState.filmsDataDB
+                                if (factDataObjForDB != null) {
+                                    binding.userComments.setText(appState.filmsDataDB.userComments)
+                                }
                                 dataOfLastWatching.text = appState.filmsDataDB.dateOfWatchig
                             }
 
                         }
                     }
                 })
-                descriptionViewModel.loadData(film.id.toString())
+                descriptionViewModel.loadData(film.id)
             }
         }
 
-        val buttonSaveComments = binding.saveComments
-        buttonSaveComments.setOnClickListener(View.OnClickListener {
 
-
-            binding.userComments.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
-
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-                override fun afterTextChanged(s: Editable) {
-                    userComments = s.toString()
-                }
-            })
-
+        binding.saveComments.setOnClickListener(View.OnClickListener {
+            hideKeyboardFrom(requireContext(),view)
+            val userComments = binding.userComments.text
             val date = Date().time
             clickToSaveComments?.saveComments(
                 FactDataObjForDB(
@@ -137,9 +125,16 @@ class DescriptionPage : Fragment() {
                     userComments.toString()
                 )
             )
+            Log.i("userComment", "=" + factDataObjForDB.userComments)
             Toast.makeText(context, userComments, Toast.LENGTH_SHORT).show()
         })
 
+    }
+
+
+    fun hideKeyboardFrom(context: Context, view: View?) {
+        val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     companion object {

@@ -8,7 +8,7 @@ interface CommentsDao {
     @Query("SELECT * FROM CommentsEntity")
     fun all(): List<CommentsEntity>
 
-    @Query("SELECT * FROM commentsentity WHERE id = :idFromQuery")
+    @Query("SELECT * FROM CommentsEntity WHERE id = :idFromQuery")
     fun getDataById(idFromQuery: Long): CommentsEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
