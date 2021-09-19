@@ -103,7 +103,7 @@ class DescriptionPage : Fragment() {
                                 if (factDataObjForDB != null) {
                                     binding.userComments.setText(appState.filmsDataDB.userComments)
                                 }
-                                dataOfLastWatching.text = appState.filmsDataDB.dateOfWatchig
+                                dataOfLastWatching.setText(appState.filmsDataDB.dateOfWatchig)
                             }
 
                         }
