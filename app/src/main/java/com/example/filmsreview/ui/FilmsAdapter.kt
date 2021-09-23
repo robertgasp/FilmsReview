@@ -61,8 +61,6 @@ class FilmsAdapter(
             get() = field
 
         fun bind(film: FactDataObj, field: FilmCardMaketBinding) = with(field) {
-            //  cover.  setImageResource(Picasso.get().load(film.logoPath))
-            // film.logoPath.let { cover.setImageResource(it) }
             Picasso
                 .get()
                 .load(film.posterPath)

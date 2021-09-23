@@ -12,4 +12,5 @@
     <string name="item_name_18">18+</string>
     <string name="save_comment">Сохр.</string>
     <string name="comments">Комментарии</string>
+    <string name="need_permission_to_read_contacts">Необходимо предоставить разрешение для чтения контактов</string>
 </resources>

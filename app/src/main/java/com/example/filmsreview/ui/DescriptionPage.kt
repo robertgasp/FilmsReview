@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import com.example.filmsreview.AppState
 import com.example.filmsreview.R
 import com.example.filmsreview.databinding.FragmentDescriptionPageBinding
@@ -25,6 +26,7 @@ import com.example.filmsreview.model.HistoryViewModel
 import com.example.filmsreview.repository.rest.rest_entities.FactDataObj
 import com.example.filmsreview.repository.rest.rest_entities.FactDataObjForDB
 import com.squareup.picasso.Picasso
+import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -36,9 +38,10 @@ class DescriptionPage : Fragment() {
     private val descriptionViewModel: DescriptionViewModel by viewModel()
     private var filmId: Int? = null
     private var clickToSaveComments: ClickToSaveComments? = null
-    private var userComments: String? = null
+
     private lateinit var factDataObjForDB: FactDataObjForDB
     val repositoryInterface: FilmsRepositoryInterface? = null
+    private var userComments: String? = null
     private val historyViewModel: HistoryViewModel by viewModel()
 
     override fun onAttach(context: Context) {
@@ -65,6 +68,7 @@ class DescriptionPage : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val film = arguments?.getParcelable<FactDataObj>(BUNDLE_EXTRA)
+        var fragmentManager = requireActivity().supportFragmentManager
 
         film?.let {
             with(binding) {
@@ -100,9 +104,12 @@ class DescriptionPage : Fragment() {
 
                             appState.filmsDataDB.let {
                                 factDataObjForDB = appState.filmsDataDB
-                                if (factDataObjForDB != null) {
+                                factDataObjForDB?.let {
                                     binding.userComments.setText(appState.filmsDataDB.userComments)
                                 }
+//                                if (factDataObjForDB != null) {
+//                                    binding.userComments.setText(appState.filmsDataDB.userComments)
+//                                }
                                 dataOfLastWatching.setText(appState.filmsDataDB.dateOfWatchig)
                             }
 
@@ -113,7 +120,7 @@ class DescriptionPage : Fragment() {
             }
         }
 
-        
+
 
         binding.saveComments.setOnClickListener(View.OnClickListener {
             hideKeyboardFrom(requireContext(),view)
@@ -130,6 +137,12 @@ class DescriptionPage : Fragment() {
             Toast.makeText(context, userComments, Toast.LENGTH_SHORT).show()
         })
 
+        binding.shareFilm.setOnClickListener(View.OnClickListener {
+            fragmentManager.beginTransaction()
+                .replace(R.id.container,ContactsDialogFragment())
+                .addToBackStack("")
+                .commitAllowingStateLoss()
+        })
     }
 
 
@@ -137,6 +150,9 @@ class DescriptionPage : Fragment() {
         val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
+
+
+
 
     companion object {
         const val BUNDLE_EXTRA = "film"

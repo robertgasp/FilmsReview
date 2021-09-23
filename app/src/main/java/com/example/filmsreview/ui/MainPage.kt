@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmsreview.AppState
@@ -41,6 +42,7 @@ class MainPage : Fragment() {
     private var adapter: FilmsAdapter? = null
     private var isAdult: Boolean? = false
     private val IS_ADULTS_MODE = "IS_ADULTS_MODE"
+    private val BottomMenuClickInterface:BottomMenuClickInterface? = null
 
 
     override fun onAttach(context: Context) {
@@ -89,6 +91,33 @@ class MainPage : Fragment() {
             } else adapter?.setFilm(FactDataObj.filmsArray18free)
         })
         viewModel.getFilms()
+
+
+        val bottomNavigationItemView = binding.bottomNavigationMenu
+        bottomNavigationItemView.setOnItemSelectedListener {
+            var selectedfragment: Fragment?=null
+            when (it.itemId) {
+                R.id.films_collection -> {
+                    selectedfragment = MainPage()
+                    BottomMenuClickInterface?.selectBottomNavigationTab(selectedfragment)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.history -> {
+                    Toast.makeText(requireContext(), "переключение на вкладку history", Toast.LENGTH_SHORT).show()
+                    return@setOnItemSelectedListener true
+                }
+                R.id.favorites -> {
+                    Toast.makeText(requireContext(), "переключение на вкладку favorites", Toast.LENGTH_SHORT).show()
+                    return@setOnItemSelectedListener true
+                }
+                R.id.cinemas -> {
+                    selectedfragment = CinemasAround()
+                    BottomMenuClickInterface?.selectBottomNavigationTab(selectedfragment)
+                    return@setOnItemSelectedListener true
+                }
+            }
+            false
+        }
     }
 
 
@@ -119,7 +148,7 @@ class MainPage : Fragment() {
                 loadingLayout.visibility = View.GONE
                 Snackbar
                     .make(
-                        binding.bottomMenu,
+                        binding.bottomNavigationMenu,
                         getString(R.string.Error),
                         Snackbar.LENGTH_INDEFINITE
                     )

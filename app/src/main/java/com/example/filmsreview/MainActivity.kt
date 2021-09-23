@@ -5,21 +5,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.fragment.app.Fragment
 import com.example.filmsreview.databinding.ActivityMainBinding
-import com.example.filmsreview.model.Film
-import com.example.filmsreview.repository.FilmsList
 import com.example.filmsreview.repository.rest.rest_entities.FactDataObj
+import com.example.filmsreview.ui.BottomMenuClickInterface
+import com.example.filmsreview.ui.CinemasAround
 import com.example.filmsreview.ui.DescriptionPage
-import com.example.filmsreview.ui.DescriptionPage.Companion.BUNDLE_EXTRA
 import com.example.filmsreview.ui.MainPage
-import org.koin.android.ext.android.bind
-import org.koin.core.component.getScopeId
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity(), FilmClickListener {
+class MainActivity : AppCompatActivity(), FilmClickListener,BottomMenuClickInterface {
     val toolbar: Toolbar? = null
     private var isAdult = false
     private lateinit var checkBoxForAdult: MenuItem
@@ -41,6 +39,8 @@ class MainActivity : AppCompatActivity(), FilmClickListener {
         setSupportActionBar(toolbar)
     }
 
+
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_action_menu, menu)
         menu?.let {
@@ -53,12 +53,14 @@ class MainActivity : AppCompatActivity(), FilmClickListener {
         return true
     }
 
-    override fun onCreatePanelMenu(featureId: Int, menu: Menu): Boolean {
-        return super.onCreatePanelMenu(featureId, menu)
-    }
+//    override fun onCreatePanelMenu(featureId: Int, menu: Menu): Boolean {
+//        return super.onCreatePanelMenu(featureId, menu)
+//    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         isAdult = initDataSet()
+
         if (isAdult == true) {
             item.isChecked = true
         } else item.isChecked = false
@@ -68,12 +70,20 @@ class MainActivity : AppCompatActivity(), FilmClickListener {
                 if (item.isChecked) {
                     item.isChecked = false
                     isAdult = false
-                    Toast.makeText(this, "18+ выключен", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Просмотр фильмов с рейтингом 18+ выключен",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     saveDataSettingsToDisk(isAdult)
                 } else {
                     item.isChecked = true
                     isAdult = true
-                    Toast.makeText(this, "18+ включен", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Просмотр фильмов с рейтингом 18+ включен",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     saveDataSettingsToDisk(isAdult)
                 }
         }
@@ -95,9 +105,9 @@ class MainActivity : AppCompatActivity(), FilmClickListener {
     }
 
 
-    private fun initDataSet():Boolean {
-        this.let { it2 ->
-            it2.getPreferences(Context.MODE_PRIVATE)?.let { preferences ->
+    private fun initDataSet(): Boolean {
+        this.let { activity ->
+            activity.getPreferences(Context.MODE_PRIVATE)?.let { preferences ->
                 isAdult = preferences.getBoolean(IS_ADULTS_MODE, false)
             }
         }
@@ -106,13 +116,20 @@ class MainActivity : AppCompatActivity(), FilmClickListener {
 
 
     private fun saveDataSettingsToDisk(isAdult: Boolean) {
-        this.let { it3 ->
-            val preferences = it3.getPreferences(Context.MODE_PRIVATE)
+        this.let { activity ->
+            val preferences = activity.getPreferences(Context.MODE_PRIVATE)
             val editor = preferences.edit()
             editor.putBoolean(IS_ADULTS_MODE, isAdult)
                 .apply()
         }
     }
 
-    fun getAdultMode():Boolean = isAdult
+    fun getAdultMode(): Boolean = isAdult
+
+
+    override fun selectBottomNavigationTab(selectedfragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container,selectedfragment)
+            .commitAllowingStateLoss()
+    }
 }
