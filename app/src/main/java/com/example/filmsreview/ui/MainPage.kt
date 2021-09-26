@@ -92,33 +92,7 @@ class MainPage : Fragment() {
         })
         viewModel.getFilms()
 
-
-        val bottomNavigationItemView = binding.bottomNavigationMenu
-        bottomNavigationItemView.setOnItemSelectedListener {
-            var selectedfragment: Fragment?=null
-            when (it.itemId) {
-                R.id.films_collection -> {
-                    selectedfragment = MainPage()
-                    BottomMenuClickInterface?.selectBottomNavigationTab(selectedfragment)
-                    return@setOnItemSelectedListener true
-                }
-                R.id.history -> {
-                    Toast.makeText(requireContext(), "переключение на вкладку history", Toast.LENGTH_SHORT).show()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.favorites -> {
-                    Toast.makeText(requireContext(), "переключение на вкладку favorites", Toast.LENGTH_SHORT).show()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.cinemas -> {
-                    selectedfragment = CinemasAround()
-                    BottomMenuClickInterface?.selectBottomNavigationTab(selectedfragment)
-                    return@setOnItemSelectedListener true
-                }
-            }
-            false
-        }
-    }
+   }
 
 
     private fun initRecyclerView(recyclerView: RecyclerView?) {
@@ -146,14 +120,14 @@ class MainPage : Fragment() {
             }
             is AppState.Error -> {
                 loadingLayout.visibility = View.GONE
-                Snackbar
-                    .make(
-                        binding.bottomNavigationMenu,
-                        getString(R.string.Error),
-                        Snackbar.LENGTH_INDEFINITE
-                    )
-                    .setAction(getString(R.string.Error_rus)) { viewModel.getFilms() }
-                    .show()
+//                Snackbar
+//                    .make(
+//                        binding.bottomNavigationMenu,
+//                        getString(R.string.Error),
+//                        Snackbar.LENGTH_INDEFINITE
+//                    )
+//                    .setAction(getString(R.string.Error_rus)) { viewModel.getFilms() }
+//                    .show()
             }
             null -> TODO()
         }

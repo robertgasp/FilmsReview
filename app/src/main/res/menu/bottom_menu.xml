@@ -14,10 +14,10 @@
     <item
         android:id="@+id/favorites"
         android:title="Избранное"
-        app:showAsAction="never"/>
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/cinemas"
         android:title="Кинотеатры"
-        app:showAsAction="never"/>
+        app:showAsAction="always"/>
 </menu>

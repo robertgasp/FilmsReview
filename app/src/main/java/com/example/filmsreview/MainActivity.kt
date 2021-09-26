@@ -10,12 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.filmsreview.databinding.ActivityMainBinding
 import com.example.filmsreview.repository.rest.rest_entities.FactDataObj
-import com.example.filmsreview.ui.BottomMenuClickInterface
-import com.example.filmsreview.ui.CinemasAround
-import com.example.filmsreview.ui.DescriptionPage
-import com.example.filmsreview.ui.MainPage
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.filmsreview.ui.*
 
 class MainActivity : AppCompatActivity(), FilmClickListener,BottomMenuClickInterface {
     val toolbar: Toolbar? = null
@@ -37,6 +32,7 @@ class MainActivity : AppCompatActivity(), FilmClickListener,BottomMenuClickInter
 
         val toolbar: Toolbar = findViewById(R.id.widget_toolbar)
         setSupportActionBar(toolbar)
+        bottomNavigationTabs()
     }
 
 
@@ -132,4 +128,33 @@ class MainActivity : AppCompatActivity(), FilmClickListener,BottomMenuClickInter
             .replace(R.id.container,selectedfragment)
             .commitAllowingStateLoss()
     }
+
+    private fun bottomNavigationTabs(){
+        val bottomNavigationItemView = binding.bottomNavigationMenu
+        bottomNavigationItemView.setOnItemSelectedListener {
+            var selectedfragment: Fragment?=null
+            when (it.itemId) {
+                R.id.films_collection -> {
+                    selectedfragment = MainPage()
+                    selectBottomNavigationTab(selectedfragment)
+                    return@setOnItemSelectedListener true
+                }
+                R.id.history -> {
+                    Toast.makeText(this, "переключение на вкладку history", Toast.LENGTH_SHORT).show()
+                    return@setOnItemSelectedListener true
+                }
+                R.id.favorites -> {
+                    Toast.makeText(this, "переключение на вкладку favorites", Toast.LENGTH_SHORT).show()
+                    return@setOnItemSelectedListener true
+                }
+                R.id.cinemas -> {
+                    selectedfragment = CinemasAroundMaps()
+                    selectBottomNavigationTab(selectedfragment)
+                    return@setOnItemSelectedListener true
+                }
+            }
+            false
+        }
+    }
+
 }
