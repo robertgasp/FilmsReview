@@ -102,20 +102,7 @@ data class Film(
         private fun getLines(reader: BufferedReader): String {
             return reader.lines().collect(Collectors.joining("\n"))
         }
-/* fun getFilmsList(): List<Film> = listOf(
 
-     //сюда надо загрузить список фильмов
-
-     Film("500", R.drawable.unknown_cover, "Окулус", 1999, "Триллер", 8.5, "Фильм-страшилка"),
-     Film("500", R.drawable.unknown_cover, "Окулус", 1999, "Триллер", 8.5, "Фильм-страшилка"),
-     Film("500", R.drawable.unknown_cover, "Окулус", 1999, "Триллер", 8.5, "Фильм-страшилка"),
-     Film("500", R.drawable.unknown_cover, "Окулус", 1999, "Триллер", 8.5, "Фильм-страшилка"),
-
-     Film("600", R.drawable.unknown_cover, "Зеленая миля", 1999, "Драма", 9.1, ""),
-     Film("600", R.drawable.unknown_cover, "Зеленая миля", 1999, "Драма", 9.1, ""),
-     Film("600", R.drawable.unknown_cover, "Зеленая миля", 1999, "Драма", 9.1, ""),
-     Film("600", R.drawable.unknown_cover, "Зеленая миля", 1999, "Драма", 9.1, ""),
- )*/
     }
 }
 
