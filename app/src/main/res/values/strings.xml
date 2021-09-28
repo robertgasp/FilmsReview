@@ -9,4 +9,20 @@
     <string name="Loading_success">Загрузка прошла успешно</string>
     <string name="Error">Error</string>
     <string name="Error_rus">Ошибка</string>
+    <string name="item_name_18">18+</string>
+    <string name="save_comment">Сохр.</string>
+    <string name="comments">Комментарии</string>
+    <string name="need_permission_to_read_contacts">Необходимо предоставить разрешение для чтения контактов</string>
+    <string name="need_permission_to_find_location">Необходимо разрешение определения местоположения</string>
+    <string name="looks_like_location_disabled">Возможно, выключена функция определения местоположения</string>
+    <string name="enter_query">Введите запрос</string>
+    <string name="search_on_map">Поиск</string>
+    <string name="map_mode">Режим карты</string>
+    <string name="normal">Нормальный</string>
+    <string name="sattelites">Спутник</string>
+    <string name="terrain">Схема</string>
+    <string name="traffic">Трафик</string>
+    <string name="start_marker">Старт</string>
+    <string name="dialog_address_title">Найденный адресс</string>
+    <string name="dialog_address_ok">Ok</string>
 </resources>
