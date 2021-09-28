@@ -17,12 +17,24 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            versionNameSuffix "-debug"
+            //applicationIdSuffix '.debug'
+            buildConfigField "String", "TYPE", '"DEBUG"'
+        }
+        beta {
+            initWith debug
+            versionNameSuffix "-beta"
+            //applicationIdSuffix '.beta'
+            buildConfigField "String", "TYPE", '"BETA"'
         }
     }
     compileOptions {
@@ -35,6 +47,31 @@ android {
 
     buildFeatures {
         viewBinding true
+    }
+    flavorDimensions 'version'
+    productFlavors {
+        paidConfig {
+            dimension 'version'
+        }
+        freeConfig {
+            dimension 'version'
+        }
+    }
+
+    if(project.hasProperty("filmsreview.properties")
+            && new File(project.property("filmsreview.properties")).exists()) {
+
+        Properties props = new Properties()
+        props.load(new FileInputStream(file(project.property("filmsreview.properties"))))
+
+        signingConfigs {
+            release {
+                storeFile file(props['keystore'])
+                storePassword props['keystore.password']
+                keyAlias props['keyAlias']
+                keyPassword props['keyPassword']
+            }
+        }
     }
 }
 
