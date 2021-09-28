@@ -7,6 +7,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/home/robert/AndroidStudioProjects/FilmsReviewKeys/films_review_keystore.jks')
+            storePassword '123456'
+            keyAlias 'filmsreview_alias'
+            keyPassword '123456'
+        }
+    }
     compileSdk 30
 
     defaultConfig {
@@ -58,11 +66,11 @@ android {
         }
     }
 
-    if(project.hasProperty("filmsreview.properties")
-            && new File(project.property("filmsreview.properties")).exists()) {
+    if(project.hasProperty("FilmsReview.properties")
+            && new File(project.property("FilmsReview.properties")).exists()) {
 
         Properties props = new Properties()
-        props.load(new FileInputStream(file(project.property("filmsreview.properties"))))
+        props.load(new FileInputStream(file(project.property("FilmsReview.properties"))))
 
         signingConfigs {
             release {
