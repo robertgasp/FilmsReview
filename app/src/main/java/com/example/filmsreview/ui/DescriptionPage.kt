@@ -26,7 +26,6 @@ import com.example.filmsreview.model.HistoryViewModel
 import com.example.filmsreview.repository.rest.rest_entities.FactDataObj
 import com.example.filmsreview.repository.rest.rest_entities.FactDataObjForDB
 import com.squareup.picasso.Picasso
-import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
