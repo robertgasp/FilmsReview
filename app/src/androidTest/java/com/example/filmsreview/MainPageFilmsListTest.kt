@@ -73,7 +73,7 @@ class MainPageFilmsListTest {
     private fun delay(): ViewAction? {
         return object : ViewAction {
             override fun getConstraints(): Matcher<View> = ViewMatchers.isRoot()
-            override fun getDescription(): String = "wait for $2 seconds"
+            override fun getDescription(): String = "wait for $5 seconds"
             override fun perform(uiController: UiController, v: View?) {
                 uiController.loopMainThreadForAtLeast(5000L)
             }

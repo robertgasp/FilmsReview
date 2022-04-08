@@ -14,6 +14,4 @@ interface FilmsAPI {
         @Path("id")id:Int?,
         @Query("language") lang: String
     ): Call<FactDataObj>
-
-
 }

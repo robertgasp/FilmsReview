@@ -82,14 +82,14 @@ class MainPage : Fragment() {
 
         initRecyclerView(recyclerView)
 
-        viewModel.getMyLiveData().observe(requireActivity(), {
+        viewModel.getMyLiveData().observe(requireActivity()) {
             renderData(it)
             Log.d("Error", FactDataObj.getFilmsListFromInternet().toString())
 
             if (isAdult == true) {
                 adapter?.setFilm(FactDataObj.filmsArray)
             } else adapter?.setFilm(FactDataObj.filmsArray18free)
-        })
+        }
         viewModel.getFilms()
 
    }
