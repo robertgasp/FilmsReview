@@ -2,23 +2,26 @@ package com.example.filmsreview.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.Volley
 import com.example.filmsreview.AppState
+import com.example.filmsreview.Exeptions.MyString.Companion.activity
 import com.example.filmsreview.FilmClickListener
+import com.example.filmsreview.MainActivity
 import com.example.filmsreview.R
 import com.example.filmsreview.databinding.FragmentMainPageBinding
-import com.example.filmsreview.model.Film
+import com.example.filmsreview.model.ClickToSaveComments
+import com.example.filmsreview.model.FilmsRepositoryInterface
 import com.example.filmsreview.model.FilmsViewModel
 import com.example.filmsreview.repository.FilmsList
-import com.example.filmsreview.repository.FilmsRepository
 import com.example.filmsreview.repository.rest.rest_entities.FactDataObj
+import com.example.filmsreview.services.LoadFilmsFromInternetService
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -31,13 +34,15 @@ class MainPage : Fragment() {
     private var bottomNavigation: BottomNavigationView? = null
     private var filmClickListenerFromMainPage: FilmClickListener? = null
 
-    private var repository:FilmsRepository?=null
+    private lateinit var repository: FilmsRepositoryInterface
 
     private var _binding: FragmentMainPageBinding? = null
     private val binding get() = _binding!!
     private var recyclerView: RecyclerView? = null
     private var adapter: FilmsAdapter? = null
-    private var films: List<FilmsList>? = null
+    private var isAdult: Boolean? = false
+    private val IS_ADULTS_MODE = "IS_ADULTS_MODE"
+    private val BottomMenuClickInterface:BottomMenuClickInterface? = null
 
 
     override fun onAttach(context: Context) {
@@ -63,6 +68,7 @@ class MainPage : Fragment() {
         return binding.root
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -71,15 +77,22 @@ class MainPage : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        isAdult = initDataSet()
+
         initRecyclerView(recyclerView)
 
-        viewModel.getMyLiveData().observe(requireActivity(), {
+        viewModel.getMyLiveData().observe(requireActivity()) {
             renderData(it)
-//            adapter?.setFilm(FactDataObj.getFilmsListFromInternet()!!)
-            adapter?.setFilm(repository?.getFilmFromInternet()!!)
-        })
+            Log.d("Error", FactDataObj.getFilmsListFromInternet().toString())
+
+            if (isAdult == true) {
+                adapter?.setFilm(FactDataObj.filmsArray)
+            } else adapter?.setFilm(FactDataObj.filmsArray18free)
+        }
         viewModel.getFilms()
-    }
+
+   }
 
 
     private fun initRecyclerView(recyclerView: RecyclerView?) {
@@ -95,26 +108,41 @@ class MainPage : Fragment() {
         when (appState) {
             is AppState.Success -> {
                 loadingLayout.visibility = View.GONE
-                Snackbar.make(binding.bottomMenu, getString(R.string.Loading_success), Snackbar.LENGTH_LONG)
-                    .show()
+                /*Snackbar.make(
+                    binding.bottomMenu,
+                    getString(R.string.Loading_success),
+                    Snackbar.LENGTH_LONG
+                )
+                    .show()*/
             }
             is AppState.Loading -> {
                 loadingLayout.visibility = View.VISIBLE
             }
             is AppState.Error -> {
                 loadingLayout.visibility = View.GONE
-                Snackbar
-                    .make(
-                        binding.bottomMenu,
-                        getString(R.string.Error),
-                        Snackbar.LENGTH_INDEFINITE
-                    )
-                    .setAction(getString(R.string.Error_rus)) { viewModel.getFilms() }
-                    .show()
+//                Snackbar
+//                    .make(
+//                        binding.bottomNavigationMenu,
+//                        getString(R.string.Error),
+//                        Snackbar.LENGTH_INDEFINITE
+//                    )
+//                    .setAction(getString(R.string.Error_rus)) { viewModel.getFilms() }
+//                    .show()
             }
             null -> TODO()
         }
     }
+
+
+    private fun initDataSet(): Boolean? {
+        activity.let { it2 ->
+            it2?.getPreferences(Context.MODE_PRIVATE)?.let { preferences ->
+                isAdult = preferences.getBoolean(IS_ADULTS_MODE, false)
+            }
+        }
+        return isAdult
+    }
+
 
     companion object {
         fun newInstance() = MainPage()

@@ -2,18 +2,18 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/description_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.DescriptionPage"
-    android:id="@+id/description_view">
+    tools:context=".ui.DescriptionPage">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/title_of_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="@dimen/layout_margin_16">
+        android:layout_margin="@dimen/layout_margin_16"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/cover"
@@ -21,6 +21,24 @@
             android:layout_height="@dimen/image_description_size"
             android:src="@drawable/unknown_cover"
             app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/shareFilm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_shared"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_favorite_is_not_cheked"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/shareFilm"
             tools:ignore="MissingConstraints" />
 
         <TextView
@@ -65,21 +83,56 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cover"
             app:layout_constraintTop_toBottomOf="@+id/media_type"
-            tools:text="Рейтинг фильма: "/>
+            tools:text="Рейтинг фильма: " />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/layout_margin_16"
+        app:layout_constraintBottom_toTopOf="@id/data_of_last_watching"
         app:layout_constraintTop_toBottomOf="@id/title_of_description"
         tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/data_of_last_watching"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/save_comments" />
+
+    <Button
+        android:id="@+id/save_comments"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/comments_field"
+        android:layout_margin="4dp"
+        android:text="@string/save_comment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:layout_width="0dp"
+        android:layout_height="@dimen/comments_field"
+        android:layout_margin="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/save_comments"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/user_comments"
+            android:layout_width="match_parent"
+            android:inputType="textMultiLine"
+            android:layout_height="@dimen/comments_field"
+            android:hint="@string/comments" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/errorTextView"
@@ -107,6 +160,3 @@
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-

@@ -27,9 +27,12 @@
                 android:icon="@drawable/list_view_24"
                 android:title="@string/list_mode" />
         </menu>
-
-
     </item>
-
-
+    <item
+        android:id="@+id/isAdult"
+        android:orderInCategory="30"
+        android:checkable="true"
+        app:actionViewClass="android.widget.CheckBox"
+        android:title="@string/item_name_18"
+        app:showAsAction="never"/>
 </menu>
