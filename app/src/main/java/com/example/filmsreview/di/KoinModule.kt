@@ -3,6 +3,7 @@ package com.example.filmsreview.di
 import com.example.filmsreview.model.DescriptionViewModel
 import com.example.filmsreview.model.FilmsRepositoryInterface
 import com.example.filmsreview.model.FilmsViewModel
+import com.example.filmsreview.model.HistoryViewModel
 import com.example.filmsreview.repository.FilmsRepository
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -14,4 +15,5 @@ val appModule = module {
 
     viewModel { FilmsViewModel(get()) }
     viewModel { DescriptionViewModel(get()) }
+    viewModel { HistoryViewModel(get())}
 }

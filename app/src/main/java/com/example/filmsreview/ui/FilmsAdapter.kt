@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.filmsreview.FilmClickListener
 import com.example.filmsreview.databinding.FilmCardMaketBinding
 import com.example.filmsreview.repository.rest.rest_entities.FactDataObj
+import com.squareup.picasso.Picasso
 
 class FilmsAdapter(
     private var fragment: Fragment
@@ -16,9 +17,11 @@ class FilmsAdapter(
 
     private var filmData: List<FactDataObj> = listOf()
     private var filmClickListener: FilmClickListener? = null
+    private var newLine:List<FactDataObj> = listOf()
+
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setFilm(films: List<FactDataObj>) {
+    fun setFilm(films: ArrayList<FactDataObj>) {
         filmData = films
         notifyDataSetChanged()
     }
@@ -34,7 +37,6 @@ class FilmsAdapter(
 
     override fun onBindViewHolder(holder: FilmsHolder, position: Int) {
         holder.bind(filmData[position], holder.getBinding())
-       // Picasso.get().load(filmData[position].posterPath).into(holder.binding2.cover);
     }
 
 
@@ -52,17 +54,24 @@ class FilmsAdapter(
         }
     }
 
+
     inner class FilmsHolder(itemView: View, binding: FilmCardMaketBinding) :
         RecyclerView.ViewHolder(itemView) {
         var binding2 = binding
             get() = field
 
         fun bind(film: FactDataObj, field: FilmCardMaketBinding) = with(field) {
-            //  cover.  setImageResource(Picasso.get().load(film.logoPath))
-            // film.logoPath.let { cover.setImageResource(it) }
+            Picasso
+                .get()
+                .load(film.posterPath)
+                .fit()
+                .into(cover)
             title.text = film.title
             year.text = film.releaseDate
-            mediaType.text = film.mediaType
+
+            if (film.mediaType == "movie") {
+                mediaType.text = "Фильм"
+            }else mediaType.text = film.mediaType
             root.setOnClickListener { onFilmClickListener(filmData[adapterPosition]) }
         }
 
