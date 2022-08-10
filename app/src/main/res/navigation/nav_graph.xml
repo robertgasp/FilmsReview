@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/actual_fragment">
+
+    <fragment
+        android:id="@+id/actual_fragment"
+        android:name="com.example.filmsreview.ui.views.ActualFragment"
+        android:label="@string/actual"
+        tools:layout="@layout/fragment_actual">
+        <action
+            android:id="@+id/action_actual_fragment_to_detailsPage_fragment"
+            app:destination="@+id/detailsPage_fragment" />
+        <action
+            android:id="@+id/action_actual_fragment_to_history_page_fragment"
+            app:destination="@+id/history_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailsPage_fragment"
+        android:name="com.example.filmsreview.ui.views.DetailsPageFragment"
+        android:label="@string/movie_name"
+        tools:layout="@layout/fragment_details_page">
+        <argument
+            android:name="movie"
+            app:argType="com.example.filmsreview.model.repository.Film" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favourite_fragment"
+        android:name="com.example.filmsreview.ui.views.FavouriteFragment"
+        android:label="@string/favourite"
+        tools:layout="@layout/fragment_favourite">
+        <action
+            android:id="@+id/action_favourite_fragment_to_detailsPage_fragment"
+            app:destination="@+id/detailsPage_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/history_fragment"
+        android:name="com.example.filmsreview.ui.views.HistoryFragment"
+        android:label="@string/history"
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_history_page_fragment_to_detailsPage_fragment"
+            app:destination="@+id/detailsPage_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settings_fragment"
+        android:name="com.example.filmsreview.ui.views.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings" />
+</navigation>

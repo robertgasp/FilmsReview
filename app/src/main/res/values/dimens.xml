@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="cover_width">100dp</dimen>
-    <dimen name="cover_height">100dp</dimen>
-    <dimen name="card_margin">15dp</dimen>
+    <dimen name="margin_film_card">15dp</dimen>
+    <dimen name="film_cover_width">100dp</dimen>
+    <dimen name="film_cover_height">100dp</dimen>
     <dimen name="layout_margin_16">16dp</dimen>
     <dimen name="image_description_size">200dp</dimen>
     <dimen name="title_description_margin_top">30dp</dimen>
     <dimen name="title_description_text_size">20sp</dimen>
+    <dimen name="ordinary_text_size">20sp</dimen>
     <dimen name="comments_field">80dp</dimen>
     <dimen name="main_container_text_size">10sp</dimen>
+    <dimen name="details_fragment_margin_bottom">60dp</dimen>
+    <dimen name="margin_history_card">15dp</dimen>
+    <dimen name="recycler_view_margin_bottom">50dp</dimen>
+    <dimen name="text_margin_left">5dp</dimen>
+    <dimen name="recycler_view_margin_left">20dp</dimen>
+    <dimen name="recycler_view_margin_right">20dp</dimen>
+    <dimen name="margin_top_registration_text">16dp</dimen>
+    <dimen name="settings_margin_top_text">8dp</dimen>
 </resources>

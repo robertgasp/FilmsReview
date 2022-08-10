@@ -3,36 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/search"
-        android:icon="@drawable/icon_search_button"
-        android:orderInCategory="10"
-        android:title="@string/search"
-        app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always" />
+        android:id="@+id/cinemas"
+        android:title="Кинотеатры"
+        app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/view"
-        android:orderInCategory="20"
-        android:title="@string/view_mode"
-        app:showAsAction="never">
-
-        <menu>
-            <item
-                android:id="@+id/grid_view"
-                android:icon="@drawable/ic_baseline_grid_on_24"
-                android:title="@string/grid_view" />
-
-            <item
-                android:id="@+id/list_view"
-                android:icon="@drawable/list_view_24"
-                android:title="@string/list_mode" />
-        </menu>
-    </item>
-    <item
-        android:id="@+id/isAdult"
-        android:orderInCategory="30"
-        android:checkable="true"
-        app:actionViewClass="android.widget.CheckBox"
-        android:title="@string/item_name_18"
-        app:showAsAction="never"/>
+        android:id="@+id/history"
+        android:title="История"
+        app:showAsAction="ifRoom"/>
 </menu>

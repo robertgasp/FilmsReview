@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv_sign_ti"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/signIn_tittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_16"
+        android:text="@string/sign_up"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/signIn_Email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_margin_16"
+        android:layout_marginTop="@dimen/layout_margin_16"
+        android:layout_marginEnd="@dimen/layout_margin_16"
+        android:ems="10"
+        android:hint="@string/email_hint"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signIn_tittle" />
+
+    <EditText
+        android:id="@+id/signIn_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_margin_16"
+        android:layout_marginEnd="@dimen/layout_margin_16"
+        android:ems="10"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signIn_Email" />
+    <EditText
+        android:id="@+id/signIn_password_repeat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_margin_16"
+        android:layout_marginEnd="@dimen/layout_margin_16"
+        android:ems="10"
+        android:hint="@string/password_hint_repeat"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signIn_password"
+        tools:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btn_signUpIn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/settings_margin_top_text"
+        android:layout_marginBottom="@dimen/layout_margin_16"
+        android:text="@string/sign_up_action"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/signIn_Email"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/signIn_Email"
+        app:layout_constraintTop_toBottomOf="@+id/signIn_password_repeat"
+        app:layout_constraintVertical_bias="0.045" />
+
+    <TextView
+        android:id="@+id/password_error_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_16"
+        android:text="@string/password_doesnt_match"
+        android:textColor="@color/red_400"
+        android:textSize="@dimen/ordinary_text_size"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_signUpIn"/>
+
+    <Button
+        android:id="@+id/btn_forgetPass"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/settings_margin_top_text"
+        android:text="@string/forget_password"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/signIn_Email"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/signIn_Email"
+        app:layout_constraintTop_toBottomOf="@+id/btn_signUpIn" />
+
+    <TextView
+        android:id="@+id/error_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textColor="@color/red_400"
+        android:text="@string/email_should_be_filled"
+        app:layout_constraintEnd_toEndOf="@+id/signIn_Email"
+        app:layout_constraintStart_toStartOf="@+id/signIn_Email"
+        app:layout_constraintTop_toBottomOf="@id/signIn_tittle" />
+</androidx.constraintlayout.widget.ConstraintLayout>

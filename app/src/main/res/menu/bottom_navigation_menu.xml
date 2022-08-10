@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/actual_fragment"
+        android:icon="@drawable/movie_40px"
+        android:title="@string/actual_text" >
+    </item>
+
+    <item
+        android:id="@+id/favourite_fragment"
+        android:icon="@drawable/favorite_false"
+        android:title="@string/favourite_text"/>
+
+    <item
+        android:id="@+id/settings_fragment"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/settings"/>
+</menu>
