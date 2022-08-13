@@ -91,10 +91,7 @@ class FavouriteFragment() : Fragment(), FragmentContract {
                     favoriteAdapter?.setFavorite(appState.favoriteData)
                 }
             }
-            is AppState.Loading -> {
-                binding.emptyPage.visibility = View.GONE
-                loadingLayout.visibility = View.VISIBLE
-            }
+
             is AppState.Error -> {
                 binding.emptyPage.visibility = View.GONE
                 loadingLayout.visibility = View.GONE
